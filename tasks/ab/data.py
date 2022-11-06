@@ -62,7 +62,7 @@ def update_squares(s: set[int]):
 
 # DICTIONARIES
 
-def select(d: dict[str, Any], *args: tuple[str]):
+def select(d: dict, *args):
     """
     Функция принимает словарь d и набор ключей, и возвращает копию d, в которой
     оставлены только ключи из *args, при чем если какой-то ключ из *args в d
