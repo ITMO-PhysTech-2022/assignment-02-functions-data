@@ -9,10 +9,10 @@ def rprint(array: list, max_depth: int = -1):
     до глубины max_depth, заменяя все более глубокие элементы на '...'
     """
 
-    def _worker(depth: int):
+    def _worker(obj, depth: int):
         ...
 
-    _worker(0)
+    print(_worker(array, 0))
 
 
 # ARGS, KWARGS
