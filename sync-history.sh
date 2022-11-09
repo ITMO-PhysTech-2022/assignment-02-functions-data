@@ -20,7 +20,7 @@ done
 
 if [ -e "${key_files[0]}" ]; then
   echo "Найдены SSH-ключи: ${keys[*]}"
-  upstream="${parts[0]}-${parts[1]}-${parts[2]}"
+  upstream="${parts[0]}-${parts[1]}-${parts[2]}-${parts[3]}"
 
   echo -e "${RED}Убедитесь, что папка '${dir}' имеет имя assignment-XX-yyy-ваш-ник${NC}"
   echo -e "${RED}Убедитесь, что '${upstream}' - это то же самое без вашего ника${NC}"
