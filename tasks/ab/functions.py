@@ -68,7 +68,7 @@ def mex(*args):
     ...
 
 
-def replace_keys(data: dict[str, Any], **kwargs: dict[str, str]):
+def replace_keys(data: dict[str, Any], **kwargs: str):
     """
     Функция принимает словарь со строковыми ключами и набор аргументов вида
     key=value, и возвращает копию этого словаря, в котором каждый ключ key

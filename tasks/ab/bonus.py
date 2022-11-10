@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 
-def generate_json(depth: int, **kwargs: dict[str, str]):
+def generate_json(depth: int, **kwargs: str):
     """
     Функция генерирует json-объект глубины depth, удовлетворяющий заданному с
     помощью именных аргументов шаблону
@@ -9,7 +9,7 @@ def generate_json(depth: int, **kwargs: dict[str, str]):
     ...
 
 
-def preprocess(f: Callable, **kwargs: dict[Any, Callable]):
+def preprocess(f: Callable, **kwargs: Callable):
     """
     Функция принимает другую функцию f и набор аргументов вида key=value, и
     возвращает новую функцию, которая копирует поведение f, но перед этим
@@ -34,6 +34,6 @@ def memoize(*, cache_size: int | None = None):
     """
     ...
 
-# @memoize(cache_size=None)
-# def fibonacci(n):
-#     return 1 if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
+@memoize(cache_size=None)
+def fibonacci(n):
+    return 1 if n <= 1 else fibonacci(n - 1) + fibonacci(n - 2)
