@@ -3,14 +3,12 @@ import pytest
 
 import random
 from test.common.primitives import random_word
-from test.common.utils import identity, equality, timeout, multitest
+from test.common.test import create, timeout
 
-import tasks.ab.data
+from tasks.ab.data import wordcount
 
 
 class TestWordcount:
-    spec = tasks.ab.data.wordcount
-
     @staticmethod
     def _gen(length, dif, count, case=False, signs=False):
         if isinstance(length, int):
@@ -51,38 +49,44 @@ class TestWordcount:
             used.add(word)
         return True, 'Ok'
 
+    @staticmethod
+    def spawn(test_name):
+        return create(wordcount, test_name, TestWordcount._gen, TestWordcount._check)
+
     def test_basic(self):
-        multitest(identity, TestWordcount._check, TestWordcount.spec, [
-            {'data': (['word'], {'word': 1})},
-            {'data': (['two words'], {'two': 1, 'words': 1})},
-            {'data': (['one two and two ones'], {'one': 1, 'two': 2, 'and': 1, 'ones': 1})},
-            {'data': (['a sub word and subword'], {'a': 1, 'sub': 1, 'word': 1, 'and': 1, 'subword': 1})},
-            {'data': (['abc abc abd abc'], {'abc': 3, 'abd': 1})},
-            {'data': ([''], {})}
-        ])
-        multitest(TestWordcount._gen, TestWordcount._check, TestWordcount.spec, [
-            {'length': [1, 2], 'dif': 10, 'count': 10},
-            {'length': [1, 5, 10], 'dif': 10, 'count': 10},
-            {'length': 100, 'dif': 10, 'count': 10},
-            {'length': 100, 'dif': 1, 'count': 100},
-            {'length': 100, 'dif': 100, 'count': 1}
-        ])
+        runner = self.spawn('test_basic')
+        runner.multitest(
+            runner.manual('word').returns({'word': 1}),
+            runner.manual('two words').returns({'two': 1, 'words': 1}),
+            runner.manual('one two and two ones').returns({'one': 1, 'two': 2, 'and': 1, 'ones': 1}),
+            runner.manual('a sub word and subword').returns({'a': 1, 'sub': 1, 'word': 1, 'and': 1, 'subword': 1}),
+            runner.manual('abc abc abd abc').returns({'abc': 3, 'abd': 1}),
+            runner.manual('').returns({}),
+
+            runner.auto(length=[1, 2], dif=10, count=10),
+            runner.auto(length=[1, 5, 10], dif=10, count=10),
+            runner.auto(length=100, dif=10, count=10),
+            runner.auto(length=100, dif=1, count=100),
+            runner.auto(length=100, dif=100, count=1)
+        )
 
     def test_advanced(self):
-        multitest(TestWordcount._gen, TestWordcount._check, TestWordcount.spec, [
-            {'length': [1, 2], 'dif': 10, 'count': 10, 'case': True},
-            {'length': [1, 5, 10], 'dif': 10, 'count': 10, 'signs': True},
-            {'length': [1, 100], 'dif': 10, 'count': 10, 'case': True, 'signs': True},
-            {'length': 100, 'dif': 1, 'count': 100, 'case': True, 'signs': True},
-            {'length': 100, 'dif': 100, 'count': 1, 'case': True, 'signs': True}
-        ])
+        runner = self.spawn('test_advanced')
+        runner.multitest(
+            runner.auto(length=[1, 2], dif=10, count=10, case=True),
+            runner.auto(length=[1, 5, 10], dif=10, count=10, signs=True),
+            runner.auto(length=[1, 100], dif=10, count=10, case=True, signs=True),
+            runner.auto(length=100, dif=1, count=100, case=True, signs=True),
+            runner.auto(length=100, dif=100, count=1, case=True, signs=True),
+        )
 
     def test_large(self):
-        spec = timeout(TestWordcount.spec, 1.0)
-        multitest(TestWordcount._gen, TestWordcount._check, spec, [
-            {'length': 100, 'dif': 1000, 'count': 100},
-            {'length': 10, 'dif': 100, 'count': 1000},
-            {'length': 10, 'dif': 10000, 'count': 10, 'case': True},
-            {'length': 1, 'dif': 50000, 'count': 20, 'signs': True},
-            {'length': 1, 'dif': 200, 'count': 5000, 'case': True, 'signs': True}
-        ])
+        runner = create(timeout(wordcount), 'test_large', self._gen, self._check)
+        runner.multitest(
+            runner.auto(length=100, dif=1000, count=100),
+            runner.auto(length=10, dif=100, count=1000),
+            runner.auto(length=10, dif=10000, count=10),
+            runner.auto(length=1, dif=50000, count=20),
+            runner.auto(length=1, dif=200, count=5000),
+            runner.auto(length=5, dif=1000, count=1000)
+        )
