@@ -16,7 +16,7 @@ class TestCompare:
         return [set(m + l), set(m + r)], min(l, default=-1) < min(r, default=-1)
 
     def test_all(self):
-        runner = create(compare, 'test_all', TestCompare._gen)
+        runner = create(compare, 'test_all', self._gen)
         runner.multitest(
             runner.manual({1, 2, 3}, {1, 2, 3}).returns(False),
             runner.manual({1, 2}, {1, 2, 3}).returns(True),

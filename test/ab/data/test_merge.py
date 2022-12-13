@@ -42,7 +42,7 @@ class TestMerge:
         return create(merge, test_name, **kwargs)
 
     def test_basic(self):
-        runner = self.spawn('test_basic', gen=TestMerge._gen_basic)
+        runner = self.spawn('test_basic', gen=self._gen_basic)
         runner.multitest(
             runner.manual({'x': 10}, {'y': 20}).returns({'x': 10, 'y': 20}),
             runner.manual({'x': 20}, {'x': 30}).returns({'x': 20}),
@@ -55,7 +55,7 @@ class TestMerge:
         )
 
     def test_recursive(self):
-        runner = self.spawn('test_recursive', gen=TestMerge._gen_recursive)
+        runner = self.spawn('test_recursive', gen=self._gen_recursive)
         runner.multitest(
             runner.manual({'x': {'y': 20}}, {'x': {'z': 30}}, True).returns({'x': {'y': 20, 'z': 30}}),
             runner.manual({
