@@ -5,6 +5,8 @@ import pathlib
 
 import pytest
 import re
+
+from copy import deepcopy
 from threading import Thread, Event
 
 
@@ -97,7 +99,8 @@ class _TestBase:
     def multitest(self, *tests):
         for test_no, test in enumerate(tests):
             try:
-                result = self.spec(*test.args, **test.kwargs)
+                args_c, kwargs_c = deepcopy(test.args), deepcopy(test.kwargs)
+                result = self.spec(*args_c, **kwargs_c)
                 verdict, msg = self.check(result, test.answer)
                 if not verdict:
                     self.report_wa(test_no + 1, test, result, msg)
