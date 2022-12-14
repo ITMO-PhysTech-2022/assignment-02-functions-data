@@ -23,8 +23,21 @@ class TestTranslateBack:
         return [d1], d2
 
     @staticmethod
+    def _check(result, answer):
+        if not isinstance(result, dict):
+            return False, 'Ожидалось, что функция вернет словарь'
+        if len(result) != len(answer):
+            return False, f'Ожидалось, что в ответе будет {len(answer)} слов, получено {len(result)}'
+        for word in answer:
+            if word not in result:
+                return False, f'Ожидалось, что слово \'{word}\' будет присутствовать в ответе'
+            if set(answer[word]) != set(result[word]):
+                return False, f'Неверное множество переводов для слова \'{word}\''
+        return True, 'Ok'
+
+    @staticmethod
     def spawn(test_name):
-        return create(translate_back, test_name, TestTranslateBack._gen)
+        return create(translate_back, test_name, TestTranslateBack._gen, TestTranslateBack._check)
 
     def test_all(self):
         runner = self.spawn('test_all')
