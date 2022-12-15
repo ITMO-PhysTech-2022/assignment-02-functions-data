@@ -1,0 +1,22 @@
+name: 'Test data.py::caesar_encode/test_basic'
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize ]
+    paths:
+      - 'tasks/ab/data.py'
+      - 'test/ab/test_caesar_encode'
+      - '.github/workflows/caesar-encode$basic.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-deepcopy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pytest
+      - run: pytest test/ab/test_caesar_encode::TestCaesarEncode::test_basic

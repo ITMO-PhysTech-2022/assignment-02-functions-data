@@ -1,0 +1,22 @@
+name: 'Test functions.py::generate_json/test_all'
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize ]
+    paths:
+      - 'tasks/ab/functions.py'
+      - 'test/ab/test_generate_json'
+      - '.github/workflows/generate-json$all.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-deepcopy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pytest
+      - run: pytest test/ab/test_generate_json::TestGenerateJson::test_all

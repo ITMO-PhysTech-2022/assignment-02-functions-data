@@ -15,7 +15,7 @@ class TestEncode:
     def spawn(test_name):
         return create(caesar_encode, test_name)
 
-    def test_encode_lowercase(self):
+    def test_basic(self):
         runner = self.spawn('test_encode_lowercase')
         runner.multitest(
             runner.manual('simple identity', 26).returns('simple identity'),
@@ -27,7 +27,7 @@ class TestEncode:
             runner.manual('abcdefghijklmnopqrstuvwxyz', 23).returns('defghijklmnopqrstuvwxyzabc'),
         )
 
-    def test_encode_advanced(self):
+    def test_advanced(self):
         runner = self.spawn('test_encode_advanced')
         runner.multitest(
             runner.manual('Simple Identity', 26).returns('Simple Identity'),
@@ -51,7 +51,7 @@ class TestDecode:
         secret = caesar_encode(s, shift)
         return caesar_decode(secret, shift)
 
-    def test_decode(self):
+    def test_all(self):
         src = inspect.getsource(caesar_decode)
         if src.find('lambda') == -1:
             pytest.fail('Ожидалось, что caesar_decode будет определен как lambda-функция')

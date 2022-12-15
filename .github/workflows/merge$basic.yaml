@@ -1,0 +1,22 @@
+name: 'Test data.py::merge/test_basic'
+
+on:
+  pull_request:
+    types: [ opened, edited, synchronize ]
+    paths:
+      - 'tasks/ab/data.py'
+      - 'test/ab/test_merge'
+      - '.github/workflows/merge$basic.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-deepcopy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pytest
+      - run: pytest test/ab/test_merge::TestMerge::test_basic
