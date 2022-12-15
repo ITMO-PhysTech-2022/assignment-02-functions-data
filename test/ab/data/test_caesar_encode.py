@@ -16,7 +16,7 @@ class TestCaesarEncode:
         return create(caesar_encode, test_name)
 
     def test_basic(self):
-        runner = self.spawn('test_encode_lowercase')
+        runner = self.spawn('test_basic')
         runner.multitest(
             runner.manual('simple identity', 26).returns('simple identity'),
             runner.manual('caesar', 1).returns('bzdrzq'),
@@ -27,8 +27,8 @@ class TestCaesarEncode:
             runner.manual('abcdefghijklmnopqrstuvwxyz', 23).returns('defghijklmnopqrstuvwxyzabc'),
         )
 
-    def test_advanced(self):
-        runner = self.spawn('test_encode_advanced')
+    def test_cases(self):
+        runner = self.spawn('test_cases')
         runner.multitest(
             runner.manual('Simple Identity', 26).returns('Simple Identity'),
             runner.manual('Encode this', 11).returns('Tcrdst iwxh'),

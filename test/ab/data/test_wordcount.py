@@ -71,7 +71,7 @@ class TestWordcount:
         )
 
     def test_noise(self):
-        runner = self.spawn('test_advanced')
+        runner = self.spawn('test_noise')
         runner.multitest(
             runner.auto(length=[1, 2], dif=10, count=10, case=True),
             runner.auto(length=[1, 5, 10], dif=10, count=10, signs=True),
