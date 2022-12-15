@@ -1,4 +1,4 @@
-name: 'Test data.py::caesar_encode/test_advanced'
+name: 'Test data.py::caesar_encode/test_cases'
 
 on:
   pull_request:
@@ -6,11 +6,11 @@ on:
     paths:
       - 'tasks/ab/data.py'
       - 'test/ab/data/test_caesar_encode.py'
-      - '.github/workflows/caesar-encode$advanced.yaml'
+      - '.github/workflows/caesar-encode$cases.yaml'
   workflow_dispatch:
 
 jobs:
-  test_advanced:
+  test_cases:
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install pytest
-      - run: pytest test/ab/data/test_caesar_encode.py::TestCaesarEncode::test_advanced
+      - run: pytest test/ab/data/test_caesar_encode.py::TestCaesarEncode::test_cases
