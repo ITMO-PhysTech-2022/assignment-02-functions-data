@@ -5,7 +5,7 @@ on:
     types: [ opened, edited, synchronize ]
     paths:
       - 'tasks/ab/functions.py'
-      - 'test/ab/test_count_calls_until'
+      - 'test/ab/functions/test_count_calls_until.py'
       - '.github/workflows/count-calls-until$all.yaml'
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install pytest
-      - run: pytest test/ab/test_count_calls_until::TestCountCallsUntil::test_all
+      - run: pytest test/ab/functions/test_count_calls_until.py::TestCountCallsUntil::test_all

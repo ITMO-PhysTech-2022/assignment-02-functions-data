@@ -5,7 +5,7 @@ on:
     types: [ opened, edited, synchronize ]
     paths:
       - 'tasks/ab/data.py'
-      - 'test/ab/test_translate_back'
+      - 'test/ab/data/test_translate_back.py'
       - '.github/workflows/translate-back$all.yaml'
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install pytest
-      - run: pytest test/ab/test_translate_back::TestTranslateBack::test_all
+      - run: pytest test/ab/data/test_translate_back.py::TestTranslateBack::test_all

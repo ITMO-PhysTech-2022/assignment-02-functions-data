@@ -5,7 +5,7 @@ on:
     types: [ opened, edited, synchronize ]
     paths:
       - 'tasks/ab/functions.py'
-      - 'test/ab/test_wtf'
+      - 'test/ab/functions/test_wtf.py'
       - '.github/workflows/wtf$all.yaml'
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install pytest
-      - run: pytest test/ab/test_wtf::TestWtf::test_all
+      - run: pytest test/ab/functions/test_wtf.py::TestWtf::test_all

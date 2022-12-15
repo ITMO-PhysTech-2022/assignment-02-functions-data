@@ -5,7 +5,7 @@ on:
     types: [ opened, edited, synchronize ]
     paths:
       - 'tasks/ab/functions.py'
-      - 'test/ab/test_replace_keys'
+      - 'test/ab/functions/test_replace_keys.py'
       - '.github/workflows/replace-keys$all.yaml'
   workflow_dispatch:
 
@@ -19,4 +19,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install pytest
-      - run: pytest test/ab/test_replace_keys::TestReplaceKeys::test_all
+      - run: pytest test/ab/functions/test_replace_keys.py::TestReplaceKeys::test_all

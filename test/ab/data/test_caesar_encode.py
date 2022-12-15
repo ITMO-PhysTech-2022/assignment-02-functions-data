@@ -10,7 +10,7 @@ from test.common.test import create
 from tasks.ab.data import caesar_encode, caesar_decode
 
 
-class TestEncode:
+class TestCaesarEncode:
     @staticmethod
     def spawn(test_name):
         return create(caesar_encode, test_name)
@@ -38,7 +38,7 @@ class TestEncode:
         )
 
 
-class TestDecode:
+class TestCaesarDecode:
     @staticmethod
     def _gen(length, size):
         words = [random_word(random.randint(1, length)) for _ in range(size)]
