@@ -2,6 +2,7 @@ import inspect
 import pytest
 
 import random
+from copy import deepcopy
 from test.common.primitives import random_word, random_value
 from test.common.test import create
 
@@ -17,7 +18,13 @@ class TestMerge:
         d1, d2, d3 = {k: random_value(7) for k in m}, {}, {}
         for d, k in ((d1, m), (d2, l), (d3, r)):
             d.update({key: random_value(7) for key in k})
-        return [d1 | d2, d3 | d1], d3 | d1 | d2
+
+        r1, r2, r3 = deepcopy(d1), deepcopy(d3), deepcopy(d3)
+        r1.update(d2)
+        r2.update(d1)
+        r3.update(d1)
+        r3.update(d2)
+        return [r1, r2], r3
 
     @staticmethod
     def _gen_recursive(depth, width, spam=1):
